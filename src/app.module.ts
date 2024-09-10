@@ -1,4 +1,5 @@
 
+import './boilerplate.polyfill';
 import { Module } from '@nestjs/common';
 
 import { HealthCheckerModule } from './modules/health-checker/health-checker.module';

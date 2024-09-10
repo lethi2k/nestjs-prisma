@@ -8,4 +8,5 @@ export abstract class AbstractDto {
 
 export abstract class AbstractTranslationDto extends AbstractDto {
   languageCode!: LanguageCode;
+  text: string;
 }
