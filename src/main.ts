@@ -32,8 +32,8 @@ export async function bootstrap(): Promise<NestExpressApplication> {
   app.enable('trust proxy'); // only if you're behind a reverse proxy (Heroku, Bluemix, AWS ELB, Nginx, etc)
   app.use(helmet());
   // app.setGlobalPrefix('/api'); use api as global prefix if you don't have subdomain
-  // app.use(compression());
-  // app.use(morgan('combined'));
+  app.use(compression());
+  app.use(morgan('combined'));
   app.enableVersioning();
 
   const reflector = app.get(Reflector);
@@ -45,9 +45,9 @@ export async function bootstrap(): Promise<NestExpressApplication> {
 
   app.useGlobalInterceptors(
     new ClassSerializerInterceptor(reflector),
-    // new TranslationInterceptor(
-    //   app.select(SharedModule).get(TranslationService),
-    // ),
+    new TranslationInterceptor(
+      app.select(SharedModule).get(TranslationService),
+    ),
   );
 
   app.useGlobalPipes(
@@ -60,35 +60,34 @@ export async function bootstrap(): Promise<NestExpressApplication> {
     }),
   );
 
-  // const configService = app.select(SharedModule).get(ApiConfigService);
 
-  // // only start nats if it is enabled
-  // if (configService.natsEnabled) {
-  //   const natsConfig = configService.natsConfig;
-  //   app.connectMicroservice({
-  //     transport: Transport.NATS,
-  //     options: {
-  //       url: `nats://${natsConfig.host}:${natsConfig.port}`,
-  //       queue: 'main_service',
-  //     },
-  //   });
+  const configService = app.select(SharedModule).get(ApiConfigService);
 
-  //   await app.startAllMicroservices();
-  // }
+  // only start nats if it is enabled
+  if (configService.natsEnabled) {
+    const natsConfig = configService.natsConfig;
+    app.connectMicroservice({
+      transport: Transport.NATS,
+      options: {
+        url: `nats://${natsConfig.host}:${natsConfig.port}`,
+        queue: 'main_service',
+      },
+    });
 
-  // if (configService.documentationEnabled) {
-  //   setupSwagger(app);
-  // }
+    await app.startAllMicroservices();
+  }
 
-  // // Starts listening for shutdown hooks
-  // if (!configService.isDevelopment) {
-  //   app.enableShutdownHooks();
-  // }
+  if (configService.documentationEnabled) {
+    setupSwagger(app);
+  }
 
-  // const port = configService.appConfig.port;
+  // Starts listening for shutdown hooks
+  if (!configService.isDevelopment) {
+    app.enableShutdownHooks();
+  }
 
-  setupSwagger(app);
-  await app.listen(3000);
+  const port = configService.appConfig.port;
+  await app.listen(port);
 
   console.info(`server running on ${await app.getUrl()}`);
 

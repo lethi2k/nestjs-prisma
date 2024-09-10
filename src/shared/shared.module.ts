@@ -8,18 +8,10 @@ import { GeneratorService } from './services/generator.service';
 import { TranslationService } from './services/translation.service';
 import { ValidatorService } from './services/validator.service';
 
-const providers: Provider[] = [
-  ApiConfigService,
-  ValidatorService,
-  AwsS3Service,
-  GeneratorService,
-  TranslationService,
-];
-
 @Global()
 @Module({
-  providers,
+  providers: [ApiConfigService, ValidatorService, AwsS3Service, GeneratorService, TranslationService],
   imports: [CqrsModule],
-  exports: [...providers, CqrsModule],
+  exports: [ApiConfigService, ValidatorService, AwsS3Service, GeneratorService, TranslationService, CqrsModule],
 })
-export class SharedModule {}
+export class SharedModule { }
