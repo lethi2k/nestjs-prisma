@@ -121,28 +121,7 @@ enum LanguageCode {
   EN
   FR
   ES
-  // Add other language codes as needed
 }
-
-model AbstractEntity {
-  id          String   @id @default(uuid())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  translations AbstractTranslationEntity[]
-
-  @@map("abstract_entity") // Optional: Map Prisma model to a specific table name
-}
-
-model AbstractTranslationEntity {
-  id          String   @id @default(uuid())
-  languageCode LanguageCode
-  abstractEntityId String
-  abstractEntity AbstractEntity @relation(fields: [abstractEntityId], references: [id])
-
-  @@map("abstract_translation_entity") // Optional: Map Prisma model to a specific table name
-}
-
-// schema.prisma
 
 model User {
   id        Int          @id @default(autoincrement())

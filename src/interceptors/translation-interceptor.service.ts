@@ -8,7 +8,6 @@ import type { Observable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
 import { TranslationService } from '../shared/services/translation.service';
-import { AbstractDto } from '@src/common/dto/abstract.dto';
 
 // FIXME: add implementation
 @Injectable()
@@ -18,7 +17,7 @@ export class TranslationInterceptor implements NestInterceptor {
   public intercept(
     _context: ExecutionContext,
     next: CallHandler,
-  ): Observable<AbstractDto> {
+  ) {
     return next
       .handle()
       .pipe(

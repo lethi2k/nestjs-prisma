@@ -10,8 +10,20 @@ import { ValidatorService } from './services/validator.service';
 
 @Global()
 @Module({
-  providers: [ApiConfigService, ValidatorService, AwsS3Service, GeneratorService, TranslationService],
+  providers: [
+    ApiConfigService,
+    ValidatorService,
+    AwsS3Service,
+    GeneratorService,
+    TranslationService
+  ],
   imports: [CqrsModule],
-  exports: [ApiConfigService, ValidatorService, AwsS3Service, GeneratorService, TranslationService, CqrsModule],
+  exports: [
+    ApiConfigService,
+    ValidatorService,
+    AwsS3Service, GeneratorService,
+    TranslationService,
+    CqrsModule
+  ],
 })
 export class SharedModule { }

@@ -6,7 +6,7 @@ import { I18nService } from 'nestjs-i18n';
 import { ContextProvider } from '@src/providers';
 import { ITranslationDecoratorInterface } from '@src/interfaces';
 import { STATIC_TRANSLATION_DECORATOR_KEY } from '@src/decorators';
-import { AbstractDto } from '@src/common/dto/abstract.dto';
+import { AbstractTranslationDto } from '@src/common/dto/abstract.dto';
 
 @Injectable()
 export class TranslationService {
@@ -19,7 +19,7 @@ export class TranslationService {
     });
   }
 
-  async translateNecessaryKeys<T extends AbstractDto>(dto: T): Promise<T> {
+  async translateNecessaryKeys<T extends AbstractTranslationDto>(dto: T): Promise<T> {
     await Promise.all(
       map(dto, async (value, key) => {
         if (isString(value)) {
@@ -35,14 +35,14 @@ export class TranslationService {
           return;
         }
 
-        if (value instanceof AbstractDto) {
+        if (value instanceof AbstractTranslationDto) {
           return this.translateNecessaryKeys(value);
         }
 
         if (isArray(value)) {
           return Promise.all(
             map(value, (v) => {
-              if (v instanceof AbstractDto) {
+              if (v instanceof AbstractTranslationDto) {
                 return this.translateNecessaryKeys(v);
               }
 

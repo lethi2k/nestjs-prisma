@@ -10,9 +10,11 @@ import { ClsModule } from 'nestjs-cls';
 import { ConfigModule } from '@nestjs/config';
 import { AcceptLanguageResolver, HeaderResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
 import path from 'path';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
+    PrismaModule,
     UserModule,
     HealthCheckerModule,
     ClsModule.forRoot({

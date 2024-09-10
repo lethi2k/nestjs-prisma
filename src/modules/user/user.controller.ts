@@ -4,7 +4,6 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 
 import { UserService } from './user.service';
-import { UserDto } from './dtos/user.dto';
 
 @ApiTags('users')
 @Controller('/users')
@@ -15,7 +14,6 @@ export class UserController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Get users list',
-    type: UserDto,
   })
   async getAll(): Promise<User[]> {
     return this.userService.users({});
