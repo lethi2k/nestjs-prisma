@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2021",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@src/*": ["src/*"],
+      "@agents/*": ["src/agents/*"],
+      "@auth/*": ["src/auth/*"],
+      "@config/*": ["src/config/*"],
+      "@filters/*": ["src/filters/*"],
+      "@health/*": ["src/health/*"],
+      "@prisma/*": ["src/prisma/*"],
+      "@knowledge-base/*": ["src/knowledge-base/*"],
+      "@models/*": ["src/models/*"],
+      "@s3/*": ["src/s3/*"],
+      "@storage/*": ["src/storage/*"],
+      "@tools/*": ["src/tools/*"],
+      "@types/*": ["src/types/*"],
+      "@users/*": ["src/users/*"],
+      "@utils/*": ["src/utils/*"],
+      "@chat/*":  ["src/chat/*"]
+    }
+  }
+}
