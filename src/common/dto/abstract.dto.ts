@@ -1,7 +1,7 @@
-import { ContextProvider } from '../../providers';
 import { AbstractEntity } from '../abstract.entity';
 import { LanguageCode as PrismaLanguageCode } from '@prisma/client'
-import { LanguageCode as AppLanguageCode } from '../../constants';
+import { LanguageCode as AppLanguageCode } from '@src/constants';
+import { ContextProvider } from '@src/providers';
 
 export class AbstractDto {
   id!: string;
