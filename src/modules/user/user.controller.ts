@@ -1,14 +1,14 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Query, UseGuards, ValidationPipe } from '@nestjs/common';
-import { RoleType, User } from '@prisma/client';
+import { Controller, Get, HttpCode, HttpStatus, Query, ValidationPipe } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { RoleType, User } from '@prisma/client';
 
 
-import { UserService } from './user.service';
-import { TranslationService } from '@src/shared/services/translation.service';
+import { PageOptionsDto } from '@src/common/dto/page-options.dto';
+import { PageDto } from '@src/common/dto/page.dto';
 import { ApiPageResponse, Auth, AuthUser, UUIDParam } from '@src/decorators';
 import { UseLanguageInterceptor } from '@src/interceptors/language-interceptor.service';
-import { PageDto } from '@src/common/dto/page.dto';
-import { PageOptionsDto } from '@src/common/dto/page-options.dto';
+import { TranslationService } from '@src/shared/services/translation.service';
+import { UserService } from './user.service';
 
 @Controller('users')
 @ApiTags('users')

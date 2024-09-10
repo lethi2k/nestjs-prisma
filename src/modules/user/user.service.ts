@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, User } from '@prisma/client';
+import { Prisma, RoleType, User } from '@prisma/client';
+import { PageMetaDto } from '@src/common/dto/page-meta.dto';
 import { PageOptionsDto } from '@src/common/dto/page-options.dto';
+import { PageDto } from '@src/common/dto/page.dto';
+import { Order } from '@src/constants';
+import { FileNotImageException, UserNotFoundException } from '@src/exceptions';
+import { IFile } from '@src/interfaces';
 import { PrismaService } from '@src/prisma/prisma.service';
+import { AwsS3Service } from '@src/shared/services/aws-s3.service';
+import { ValidatorService } from '@src/shared/services/validator.service';
 import { CreateSettingsDto } from './dtos/create-settings.dto';
 import { UserRegisterDto } from './dtos/user-register.dto';
-import { IFile } from '@src/interfaces';
-import { ValidatorService } from '@src/shared/services/validator.service';
-import { AwsS3Service } from '@src/shared/services/aws-s3.service';
-import { FileNotImageException, UserNotFoundException } from '@src/exceptions';
-import { PageDto } from '@src/common/dto/page.dto';
-import { PageMetaDto } from '@src/common/dto/page-meta.dto';
-import { Order } from '@src/constants';
 
 @Injectable()
 export class UserService {
@@ -23,8 +23,10 @@ export class UserService {
   /**
    * Find single user
    */
-  async findOne(findData: Prisma.UserFindUniqueArgs): Promise<User | null> {
-    return this.prisma.user.findUnique(findData);
+  async findOne(findData: { id?: number; role?: RoleType }): Promise<User | null> {
+    return this.prisma.user.findFirst({
+      where: findData,
+    });
   }
 
   async findByUsernameOrEmail(
